@@ -1,7 +1,7 @@
 set search_path to forum_app;
 
 -- Create some base user roles
-insert into user_roles (name) values ('ADMIN'), ('BASIC_USER'), ('VERIFIED_USER'), ('APP_OWNER'); 
+insert into user_roles (name) values ('BASIC_USER'), ('VERIFIED_USER'), ('ADMIN'), ('APP_OWNER'); 
 
 --create a new Forum user
 insert into app_users (first_name, last_name, email, username, password, profile_pic, role_id)
