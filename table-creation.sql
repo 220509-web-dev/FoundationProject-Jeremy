@@ -4,7 +4,7 @@ set search_path to forum_app;
 
 CREATE TABLE user_roles (
     id int generated always as identity primary key,
-    name varchar not null unique
+    role_name varchar not null unique
 );
 
 CREATE TABLE app_users (
