@@ -47,17 +47,3 @@ CREATE TABLE app_posts (
     foreign key (category_id)
     references categories(id)
 );
-
-CREATE TABLE favorites (
-    id int generated always as identity primary key,
-    user_id int,
-    post_id int,
-    
-    constraint favorites_owner_fk
-    foreign key (user_id)
-    references app_users(id),
-    
-    constraint favorites_post_fk
-    foreign key (post_id)
-    references categories(id)
-);
