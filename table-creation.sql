@@ -30,7 +30,7 @@ CREATE TABLE categories (
 CREATE TABLE app_posts (
     id int generated always as identity primary key,
     title varchar not null,
-    descripton text not null,
+    description text not null,
     thumbnail_url varchar,
     video_url varchar,
     likes int default 0,
