@@ -16,10 +16,10 @@ public class PostDaoPostgres implements PostDAO {
     @Override
     public Post createPost(Post post) {
         try(Connection connection = ConnectionUtil.getConnection()) {
-            logString = "Attempting to create post";
+            logString = "Attempting to create post.";
             CustomLogger.log(logString, LogLevel.INFO);
-            String sql = "insert into forum_app.app_posts (title, description, thumbnail_url, video_url, owner_id, category_id) values(?,?,?,?,?,?)";
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            String g = "insert into forum_app.app_posts (title, description, thumbnail_url, video_url, owner_id, category_id) values(?,?,?,?,?,?)";
+            PreparedStatement ps = connection.prepareStatement(g, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getDescription());
             ps.setString(3, post.getThumbnailUrl());
@@ -37,11 +37,13 @@ public class PostDaoPostgres implements PostDAO {
             post.setId(generatedID);// the book id changing for 0 to a non-zero values means that it is saved
             logString = "Created post successfully!";
             CustomLogger.log(logString, LogLevel.INFO);
+            CustomLogger.parser();
             return post;
 
         } catch (SQLException exception) {
             logString = String.format("An error occurred while creating a post. More Information: %s", ExceptionUtils.getStackTrace(exception));
             CustomLogger.log(logString, LogLevel.ERROR);
+            CustomLogger.parser();
             exception.printStackTrace();
         }
         return null;
@@ -73,12 +75,14 @@ public class PostDaoPostgres implements PostDAO {
             post.setCategoryId(rs.getInt("category_id"));
             logString = "Retrieved post successfully!.";
             CustomLogger.log(logString, LogLevel.INFO);
+            CustomLogger.parser();
             return post;
 
         } catch (SQLException exception){
             logString = String.format("Post was not found... More Information: Post ID: %d not found.", id);
             CustomLogger.log(logString,LogLevel.ERROR);
-            System.err.println("Exception: Post ID: " + id +  " not found.");
+            CustomLogger.parser();
+            System.err.println("Exception: Post ID: " + id + " not found.");
         }
         return null;
     }
@@ -86,6 +90,8 @@ public class PostDaoPostgres implements PostDAO {
     @Override
     public List<Post> getAllPost() {
         try(Connection connection = ConnectionUtil.getConnection()){
+            logString = "Attempting to retrieve all post.";
+            CustomLogger.log(logString, LogLevel.INFO);
             String sql = "select * from forum_app.app_posts";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -105,8 +111,14 @@ public class PostDaoPostgres implements PostDAO {
                 post.setCategoryId(rs.getInt("category_id"));
                 posts.add(post);
             }
+            logString = "Retrieved all post Successfully!";
+            CustomLogger.log(logString, LogLevel.INFO);
+            CustomLogger.parser();
             return posts;
         } catch (SQLException exception) {
+            logString = String.format("Error occurred while trying to find Posts.. More information: %s", ExceptionUtils.getMessage(exception));
+            CustomLogger.log(logString, LogLevel.ERROR);
+            CustomLogger.parser();
             exception.printStackTrace();
         }
         return null;
@@ -115,6 +127,8 @@ public class PostDaoPostgres implements PostDAO {
     @Override
     public Post updatePost(Post post) {
         try(Connection connection = ConnectionUtil.getConnection()) {
+            logString = "Attempting to update a post.";
+            CustomLogger.log(logString, LogLevel.INFO);
             String sql = "update forum_app.app_posts set title = ?, description = ?, thumbnail_url = ?, video_url = ?, owner_id = ?, category_id = ? where id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, post.getTitle());
@@ -127,8 +141,15 @@ public class PostDaoPostgres implements PostDAO {
 
             ps.execute();
 
+            logString = "Post updated successfully.";
+            CustomLogger.log(logString, LogLevel.INFO);
+            CustomLogger.parser();
             return post;
         } catch (SQLException exception) {
+            logString = "Post not found.";
+            CustomLogger.log(logString, LogLevel.ERROR);
+            CustomLogger.parser();
+            System.err.println("Exception: Post not found to update.");
             exception.printStackTrace();
         }
         return null;
@@ -137,11 +158,20 @@ public class PostDaoPostgres implements PostDAO {
     @Override
     public void deletePostById(int id) {
         try(Connection connection = ConnectionUtil.getConnection()) {
+            logString = "Attempting to delete a post.";
+            CustomLogger.log(logString, LogLevel.INFO);
             String sql = "delete from forum_app.app_posts where id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ps.execute();
+            logString = "Post deleted successfully.";
+            CustomLogger.log(logString, LogLevel.INFO);
+            CustomLogger.parser();
         } catch (SQLException exception) {
+            logString = "Post not found.";
+            CustomLogger.log(logString, LogLevel.ERROR);
+            CustomLogger.parser();
+            System.err.println("Exception: Post not found to delete.");
             exception.printStackTrace();
         }
     }

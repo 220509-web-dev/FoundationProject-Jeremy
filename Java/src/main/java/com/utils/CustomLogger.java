@@ -23,4 +23,15 @@ public class CustomLogger {
             e.printStackTrace();
         }
     }
+
+    public static void parser(){
+        String logInfo;
+        Path location = Paths.get(System.getenv("LOG_FILE"));
+        try {
+            logInfo = "\n";
+            Files.write(Paths.get(System.getenv("LOG_FILE")), logInfo.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
