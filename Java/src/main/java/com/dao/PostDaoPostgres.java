@@ -3,15 +3,21 @@ package com.dao;
 import com.entities.Post;
 import com.entities.User;
 import com.utils.ConnectionUtil;
+import com.utils.CustomLogger;
+import com.utils.LogLevel;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PostDaoPostgres implements PostDAO {
+    String logString;
     @Override
     public Post createPost(Post post) {
         try(Connection connection = ConnectionUtil.getConnection()) {
+            logString = "Attempting to create post";
+            CustomLogger.log(logString, LogLevel.INFO);
             String sql = "insert into forum_app.app_posts (title, description, thumbnail_url, video_url, owner_id, category_id) values(?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, post.getTitle());
@@ -29,9 +35,13 @@ public class PostDaoPostgres implements PostDAO {
             int generatedID = rs.getInt("id");
 
             post.setId(generatedID);// the book id changing for 0 to a non-zero values means that it is saved
+            logString = "Created post successfully!";
+            CustomLogger.log(logString, LogLevel.INFO);
             return post;
 
         } catch (SQLException exception) {
+            logString = String.format("An error occurred while creating a post. More Information: %s", ExceptionUtils.getStackTrace(exception));
+            CustomLogger.log(logString, LogLevel.ERROR);
             exception.printStackTrace();
         }
         return null;
@@ -40,6 +50,8 @@ public class PostDaoPostgres implements PostDAO {
     @Override
     public Post getPostById(int id) {
         try (Connection connection = ConnectionUtil.getConnection()){
+            logString = "Attempting to retrieve post by ID.";
+            CustomLogger.log(logString, LogLevel.INFO);
             String sql = "select * from forum_app.app_posts where id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1,id);
@@ -59,10 +71,14 @@ public class PostDaoPostgres implements PostDAO {
             post.setDislikes(rs.getInt("dislikes"));
             post.setOwnerId(rs.getInt("owner_id"));
             post.setCategoryId(rs.getInt("category_id"));
+            logString = "Retrieved post successfully!.";
+            CustomLogger.log(logString, LogLevel.INFO);
             return post;
 
         } catch (SQLException exception){
-            exception.printStackTrace();
+            logString = String.format("Post was not found... More Information: Post ID: %d not found.", id);
+            CustomLogger.log(logString,LogLevel.ERROR);
+            System.err.println("Exception: Post ID: " + id +  " not found.");
         }
         return null;
     }

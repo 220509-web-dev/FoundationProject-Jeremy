@@ -61,7 +61,7 @@ public class UserDaoPostgres implements UserDAO {
             return user;
 
         } catch (SQLException exception){
-            exception.printStackTrace();
+            System.err.println("Exception: User ID: " + id + " not found.");
         }
         return null;
     }
