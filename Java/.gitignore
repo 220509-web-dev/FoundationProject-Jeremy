@@ -4,4 +4,5 @@ target/
 *.class
 *.jar
 *.war
-logs
+src/main/resources/logs.txt
+application.properties
