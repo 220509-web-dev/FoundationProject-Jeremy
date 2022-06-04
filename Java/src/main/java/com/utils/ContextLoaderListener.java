@@ -5,6 +5,7 @@ import com.dao.UserDAO;
 import com.dao.UserDaoPostgres;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.filters.CustomFilter;
+import com.servlets.AuthServlet;
 import com.servlets.PostServlet;
 import com.servlets.UserServlet;
 import com.dao.PostDaoPostgres;
@@ -26,11 +27,13 @@ public class ContextLoaderListener implements ServletContextListener {
 
         UserServlet userServlet = new UserServlet(mapper, userDAO);
         PostServlet postServlet = new PostServlet(mapper, postDAO);
+        AuthServlet authServlet = new AuthServlet(mapper);
 
         ServletContext context = sce.getServletContext();
 
         CustomFilter customFilter = new CustomFilter();
         context.addFilter("CustomFilter", customFilter).addMappingForUrlPatterns(EnumSet.of(DispatcherType.INCLUDE), true, "/*");
+        context.addServlet("authServlet", authServlet).addMapping("/auth/*");
 
         ServletRegistration.Dynamic userServlet1 = context.addServlet("UserServlet", userServlet);
 
