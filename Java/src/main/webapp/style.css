@@ -1,0 +1,135 @@
+body {
+  margin: 0px;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.main-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #1f1f1f;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #1d1d1d;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+nav ul li {
+  list-style: none;
+  display: inline-block;
+  margin-left: 20px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav ul li a:hover {
+  color: red;
+  text-decoration: none;
+}
+
+.logo {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+span {
+  color: red;
+}
+
+/* POSTS */
+
+.posts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+  margin-top: 60px;
+  padding: 20px;
+}
+
+.post-list .thumbnail {
+  object-fit: cover;
+  width: 100%;
+  height: 250px;
+}
+
+.post-list .flex-div {
+  align-items: flex-start;
+  margin-top: 7px;
+}
+
+.vid-info {
+  color: rgb(155, 155, 155);
+  font-size: 16px;
+}
+
+.vid-info a {
+  color: white;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+  text-decoration: none;
+}
+
+/* USER */
+
+.users-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+  margin-top: 60px;
+  padding: 20px;
+}
+
+.user-list .profile-pic {
+  object-fit: cover;
+  width: 100%;
+  height: 250px;
+}
+
+.user-list .flex-div {
+  align-items: flex-start;
+  margin-top: 7px;
+}
+
+.user-info {
+  color: rgb(155, 155, 155);
+  font-size: 16px;
+}
+
+.user-info h2 {
+  color: white;
+  font-weight: 600;
+  display: block;
+  text-decoration: none;
+  margin: 5px 0px;
+}
+
+h1 {
+  color: white !important;
+  font-weight: bold;
+  font-size: 30px;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  border-bottom: 1px solid red;
+  text-align: center;
+}

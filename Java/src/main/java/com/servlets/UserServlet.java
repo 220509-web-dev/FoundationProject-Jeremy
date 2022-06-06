@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserServlet extends HttpServlet {
 
@@ -38,12 +39,30 @@ public class UserServlet extends HttpServlet {
 
         logString = "UserServlet received a get request at - " + LocalDateTime.now();
         CustomLogger.log(logString, LogLevel.INFO);
-        // This value would actually come from some data source
         List<User> userList = userDAO.getAllUsers();
+        System.out.println("This is the request " + req);
 
-        String respPayload = mapper.writeValueAsString(userList);
+        //Get user by Username
+        String username = req.getParameter("username");
+
+        try {
+            int userId = Integer.parseInt(req.getParameter("id"));
+            userList = userList.stream().filter(user -> user.getId() == userId).collect(Collectors.toList());
+
+        } catch (NumberFormatException e) {
+            logString = "Null or invalid ID input";
+            CustomLogger.log(logString, LogLevel.ERROR);
+        }
+
+        // filter userList based on username
+        if (username != null) {
+            userList = userList.stream().filter(user -> user.getUsername().equals(username)).collect(Collectors.toList());
+        }
+
+        // set response
+        String result = mapper.writeValueAsString(userList);
         resp.setContentType("application/json");
-        resp.getWriter().write(respPayload);
+        resp.getWriter().write(result);
 
     }
 

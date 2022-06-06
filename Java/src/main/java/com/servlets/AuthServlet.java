@@ -43,7 +43,15 @@ public class AuthServlet extends HttpServlet {
 
         UserDAO userDAO = new UserDaoPostgres();
         List<User> users = userDAO.getAllUsers();
+        String path = req.getServletPath();
 
+        if (path.equals("/auth/login")) {
+
+        } else if (path.equals("/auth/register")) {
+
+        } else {
+
+        }
         HashMap<String, Object> credentials = mapper.readValue(req.getInputStream(), HashMap.class);
         String providedUsername = (String) credentials.get("username");
         String providedPassword = (String) credentials.get("password");
