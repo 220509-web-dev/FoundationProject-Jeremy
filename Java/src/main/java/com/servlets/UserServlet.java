@@ -41,7 +41,7 @@ public class UserServlet extends HttpServlet {
         CustomLogger.log(logString, LogLevel.INFO);
         List<User> userList = userDAO.getAllUsers();
         System.out.println("This is the request " + req);
-
+        
         //Get user by Username
         String username = req.getParameter("username");
 

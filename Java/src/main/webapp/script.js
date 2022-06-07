@@ -38,7 +38,7 @@ fetch("http://localhost:8080/forumApp/posts")
     console.log(postData);
     let post = "";
     postData.map((values) => {
-      post += `<div id="post-list" class="post-list"><a href="">
+      post += `<div id="post-list" class="post-list"><a href="" onclick="">
       <img
         src="${values.thumbnailUrl}"
         alt=""
