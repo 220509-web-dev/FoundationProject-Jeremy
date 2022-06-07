@@ -21,7 +21,6 @@ import java.util.List;
 
 public class PostServlet extends HttpServlet {
 
-
     private final ObjectMapper mapper;
     private final PostDAO postDAO;
     private String logString;
@@ -30,7 +29,6 @@ public class PostServlet extends HttpServlet {
         this.mapper = mapper;
         this.postDAO = postDAO;
     }
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,33 +45,32 @@ public class PostServlet extends HttpServlet {
 
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logString = "PostServlet received a post request at - " + LocalDateTime.now();
         CustomLogger.log(logString, LogLevel.INFO);
 
-        HttpSession session = req.getSession(false);
-        System.out.println(session);
-        if (session == null) {
-            HashMap<String, Object> errorMessage = new HashMap<>();
-            errorMessage.put("code", 401);
-            errorMessage.put("message", "No session found on request");
-            errorMessage.put("timestamp", LocalDateTime.now().toString());
+        // HttpSession session = req.getSession(false);
+        // System.out.println(session);
+        // if (session == null) {
+        //     HashMap<String, Object> errorMessage = new HashMap<>();
+        //     errorMessage.put("code", 401);
+        //     errorMessage.put("message", "No session found on request");
+        //     errorMessage.put("timestamp", LocalDateTime.now().toString());
 
-            logString = "Unauthorized PostServlet post request, user needs to login. - " + LocalDateTime.now();
-            CustomLogger.log(logString, LogLevel.ERROR);
-            CustomLogger.parser();
+        //     logString = "Unauthorized PostServlet post request, user needs to login. - " + LocalDateTime.now();
+        //     CustomLogger.log(logString, LogLevel.ERROR);
+        //     CustomLogger.parser();
 
-            resp.setStatus(401);
-            resp.setContentType("application/json");
-            resp.getWriter().write(mapper.writeValueAsString(errorMessage));
-        } else {
-            Post post = mapper.readValue(req.getInputStream(), Post.class);
-            postDAO.createPost(post);
-            System.out.println(post);
-        }
+        //     resp.setStatus(401);
+        //     resp.setContentType("application/json");
+        //     resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+        // } else {
 
+        // }
+        Post post = mapper.readValue(req.getInputStream(), Post.class);
+        postDAO.createPost(post);
+        System.out.println(post);
 
     }
 }

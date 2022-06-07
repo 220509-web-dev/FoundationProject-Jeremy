@@ -11,6 +11,11 @@ public class Post {
     private int ownerId;
     private int categoryId;
 
+    //Foreign table data
+    private String category;
+    private String owner;
+    private String profilepic;
+
     public Post() {
     }
 
@@ -96,6 +101,30 @@ public class Post {
         this.categoryId = categoryId;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getProfilepic() {
+        return profilepic;
+    }
+
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -108,6 +137,9 @@ public class Post {
                 ", dislikes=" + dislikes +
                 ", ownerId=" + ownerId +
                 ", categoryId=" + categoryId +
+                ", category='" + category + '\'' +
+                ", owner='" + owner + '\'' +
+                ", profilepic='" + profilepic + '\'' +
                 '}';
     }
 }

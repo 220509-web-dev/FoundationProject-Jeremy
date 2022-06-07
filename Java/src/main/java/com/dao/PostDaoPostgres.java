@@ -13,9 +13,10 @@ import java.util.List;
 
 public class PostDaoPostgres implements PostDAO {
     String logString;
+
     @Override
     public Post createPost(Post post) {
-        try(Connection connection = ConnectionUtil.getConnection()) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to create post.";
             CustomLogger.log(logString, LogLevel.INFO);
             String g = "insert into forum_app.app_posts (title, description, thumbnail_url, video_url, owner_id, category_id) values(?,?,?,?,?,?)";
@@ -51,12 +52,12 @@ public class PostDaoPostgres implements PostDAO {
 
     @Override
     public Post getPostById(int id) {
-        try (Connection connection = ConnectionUtil.getConnection()){
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to retrieve post by ID.";
             CustomLogger.log(logString, LogLevel.INFO);
             String sql = "select * from forum_app.app_posts where id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             //Get First Record
@@ -78,9 +79,9 @@ public class PostDaoPostgres implements PostDAO {
             CustomLogger.parser();
             return post;
 
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             logString = String.format("Post was not found... More Information: Post ID: %d not found.", id);
-            CustomLogger.log(logString,LogLevel.ERROR);
+            CustomLogger.log(logString, LogLevel.ERROR);
             CustomLogger.parser();
             System.err.println("Exception: Post ID: " + id + " not found.");
         }
@@ -89,16 +90,21 @@ public class PostDaoPostgres implements PostDAO {
 
     @Override
     public List<Post> getAllPost() {
-        try(Connection connection = ConnectionUtil.getConnection()){
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to retrieve all post.";
             CustomLogger.log(logString, LogLevel.INFO);
-            String sql = "select * from forum_app.app_posts";
+            String sql = "select ap.*, c.category_name, au.username, au.profile_pic \n" +
+                    "from forum_app.app_posts ap \n" +
+                    "join forum_app.categories c\n" +
+                    "on ap.category_id = c.id\n" +
+                    "join forum_app.app_users au \n" +
+                    "on ap.owner_id  = au.id ;";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             List<Post> posts = new ArrayList<Post>();
 
-            while (rs.next()){
+            while (rs.next()) {
                 Post post = new Post();
                 post.setId(rs.getInt("id"));
                 post.setTitle(rs.getString("title"));
@@ -108,7 +114,10 @@ public class PostDaoPostgres implements PostDAO {
                 post.setLikes(rs.getInt("likes"));
                 post.setDislikes(rs.getInt("dislikes"));
                 post.setOwnerId(rs.getInt("owner_id"));
+                post.setOwner(rs.getString("username"));
+                post.setProfilepic(rs.getString("profile_pic"));
                 post.setCategoryId(rs.getInt("category_id"));
+                post.setCategory(rs.getString("category_name"));
                 posts.add(post);
             }
             logString = "Retrieved all post Successfully!";
@@ -126,7 +135,7 @@ public class PostDaoPostgres implements PostDAO {
 
     @Override
     public Post updatePost(Post post) {
-        try(Connection connection = ConnectionUtil.getConnection()) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to update a post.";
             CustomLogger.log(logString, LogLevel.INFO);
             String sql = "update forum_app.app_posts set title = ?, description = ?, thumbnail_url = ?, video_url = ?, owner_id = ?, category_id = ? where id = ?";
@@ -157,7 +166,7 @@ public class PostDaoPostgres implements PostDAO {
 
     @Override
     public void deletePostById(int id) {
-        try(Connection connection = ConnectionUtil.getConnection()) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to delete a post.";
             CustomLogger.log(logString, LogLevel.INFO);
             String sql = "delete from forum_app.app_posts where id = ?";
