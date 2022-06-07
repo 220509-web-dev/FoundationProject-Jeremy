@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Post</title>
     <link href="style.css" rel="stylesheet" />
+
     <!-- CSS only -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -33,78 +34,95 @@
       </ul>
     </nav>
     <section class="vh-100 bg-image" style="background-color: #1f1f1f">
-      <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-        <div class="container h-100">
-          <div
-            class="row d-flex justify-content-center align-items-center h-100"
-          >
-            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-              <div class="card" style="border-radius: 15px">
-                <div class="card-body p-5">
-                  <h2 class="text-uppercase text-center mb-5">Create a post</h2>
+      <div class="createcontainer">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <h1>Create post</h1>
 
-                  <form>
-                    <div class="form-outline mb-4">
-                      <input
-                        type="text"
-                        id="form3Example1cg"
-                        class="form-control form-control-lg"
-                        required
-                      />
-                      <label class="form-label" for="form3Example1cg"
-                        >Title</label
-                      >
-                    </div>
-                    <div class="form-outline mb-4">
-                      <textarea
-                        type="text"
-                        id="form3Example1cg"
-                        class="form-control form-control-lg"
-                        required
-                      >
-                      </textarea>
-
-                      <label class="form-label" for="form3Example1cg"
-                        >Description</label
-                      >
-                    </div>
-                    <div class="form-outline mb-4">
-                      <input
-                        type="text"
-                        id="form3Example1cg"
-                        class="form-control form-control-lg"
-                      />
-                      <label class="form-label" for="form3Example1cg"
-                        >Profile Picture(URL)</label
-                      >
-                    </div>
-                    <div class="form-outline mb-4">
-                      <input
-                        type="text"
-                        id="form3Example1cg"
-                        class="form-control form-control-lg"
-                      />
-                      <label class="form-label" for="form3Example1cg"
-                        >Video(URL)</label
-                      >
-                    </div>
-
-                    <div class="d-flex justify-content-center">
-                      <button
-                        type="submit"
-                        class="btn btn-danger btn-block btn-lg gradient-custom-4 text-body"
-                        style="color: white !important"
-                      >
-                        Post
-                      </button>
-                    </div>
-                  </form>
-                </div>
+            <form action="" method="POST">
+              <div class="form-group">
+                <label>Title <span class="require">*</span></label>
+                <input type="text" class="form-control" id="title" required />
               </div>
-            </div>
+
+              <div class="form-group">
+                <label>Description</label>
+                <textarea
+                  rows="5"
+                  class="form-control"
+                  id="description"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1"
+                  >Category <span class="require">*</span></label
+                >
+                <select
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                  id="category"
+                  required
+                >
+                  <option value="1">Film & Animation</option>
+                  <option value="2">Autos & Vehicles</option>
+                  <option value="3">Music</option>
+                  <option value="4">Pets & Animals</option>
+                  <option value="5">Sports</option>
+                  <option value="6">Travel & Events</option>
+                  <option value="7">Gaming</option>
+                  <option value="8">People & Blogs</option>
+                  <option value="9">News & Politics</option>
+                  <option value="11">Entertainment</option>
+                  <option value="12">Howto & Style</option>
+                  <option value="13">Education</option>
+                  <option value="14">Science & Technology</option>
+                  <option value="15">Nonprofits & Activism</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>User Id <span class="require">*</span></label>
+                <input
+                  id="ownerId"
+                  type="number"
+                  class="form-control"
+                  placeholder="Check home page for your USER ID"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="title">Thumbnail(URL) </label>
+                <input
+                  id="thumbnailUrl"
+                  type="text"
+                  class="form-control"
+                  placeholder="(Example)https://i.pinimg.com/originals/24/30/bb/2430bbe2bea760f0e011a56e5d11f2cf.jpg"
+                />
+                <label for="title">Video(URL)</label>
+                <input
+                  id="videoUrl"
+                  type="text"
+                  class="form-control"
+                  placeholder="(Example)https://res.cloudinary.com/drrkccbb4/video/upload/v1653598196/ForumApp/videoplayback_2_bk6n8g.mp4"
+                />
+              </div>
+
+              <div class="form-group">
+                <p><span class="require">*</span> - required fields</p>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="upload-btn">
+                  Create
+                </button>
+                <a href="index.html" class="btn btn-dark">Cancel</a>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </section>
+    <script src="script.js"></script>
   </body>
 </html>

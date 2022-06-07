@@ -11,10 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +39,7 @@ public class UserServlet extends HttpServlet {
         CustomLogger.log(logString, LogLevel.INFO);
         List<User> userList = userDAO.getAllUsers();
         System.out.println("This is the request " + req);
-        
+
         //Get user by Username
         String username = req.getParameter("username");
 
@@ -75,12 +73,7 @@ public class UserServlet extends HttpServlet {
             List<User> users = userDAO.getAllUsers();
             User newUser = mapper.readValue(req.getInputStream(), User.class);
             for (User user : users) {
-                if (newUser.getEmail().equals(user.getEmail())) {
-                    logString = "Email taken, please insert a different email - " + LocalDateTime.now();
-                    CustomLogger.log(logString, LogLevel.ERROR);
-
-                    System.err.println("[ERROR] - Email taken, please insert a different email.");
-                } else if (newUser.getUsername().equals(user.getUsername())) {
+                if (newUser.getUsername().equals(user.getUsername())) {
                     logString = "Username taken, please insert a different username - " + LocalDateTime.now();
                     CustomLogger.log(logString, LogLevel.ERROR);
 

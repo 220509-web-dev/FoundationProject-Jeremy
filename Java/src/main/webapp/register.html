@@ -46,10 +46,10 @@
                   </h2>
 
                   <form>
-                    <div class="form-outline mb-4">
+                    <div class="form-outline">
                       <input
                         type="text"
-                        id="form3Example1cg"
+                        id="firstName"
                         class="form-control form-control-lg"
                         required
                       />
@@ -57,10 +57,10 @@
                         >First Name</label
                       >
                     </div>
-                    <div class="form-outline mb-4">
+                    <div class="form-outline">
                       <input
                         type="text"
-                        id="form3Example1cg"
+                        id="lastName"
                         class="form-control form-control-lg"
                         required
                       />
@@ -69,10 +69,10 @@
                       >
                     </div>
 
-                    <div class="form-outline mb-4">
+                    <div class="form-outline">
                       <input
                         type="text"
-                        id="form3Example3cg"
+                        id="username"
                         class="form-control form-control-lg"
                         required
                         placeholder="Must be 4 characters or more"
@@ -83,10 +83,10 @@
                       >
                     </div>
 
-                    <div class="form-outline mb-4">
+                    <div class="form-outline">
                       <input
                         type="password"
-                        id="form3Example4cg"
+                        id="password"
                         class="form-control form-control-lg"
                         required
                         placeholder="Must be 7 characters or more"
@@ -94,6 +94,18 @@
                       />
                       <label class="form-label" for="form3Example4cg"
                         >Password</label
+                      >
+                    </div>
+
+                    <div class="form-outline">
+                      <input
+                        type="text"
+                        id="profilePic"
+                        class="form-control form-control-lg"
+                        placeholder="(Example)https://i.pinimg.com/originals/24/30/bb/2430bbe2bea760f0e011a56e5d11f2cf.jpg"
+                      />
+                      <label class="form-label" for="form3Example4cg"
+                        >Profile Pictire(not required)</label
                       >
                     </div>
 
@@ -113,7 +125,10 @@
                       </label>
                     </div>
 
-                    <div class="d-flex justify-content-center">
+                    <div
+                      class="d-flex justify-content-center"
+                      id="register-btn"
+                    >
                       <button
                         type="submit"
                         class="btn btn-danger btn-block btn-lg gradient-custom-4 text-body"
@@ -137,5 +152,6 @@
         </div>
       </div>
     </section>
+    <script src="script.js"></script>
   </body>
 </html>

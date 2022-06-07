@@ -137,3 +137,33 @@ h1 {
   border-bottom: 1px solid red;
   text-align: center;
 }
+
+/* Create Post */
+.createcontainer {
+  height: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+  align-items: center !important;
+  margin: auto !important;
+}
+
+.row {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.form-group {
+  padding: 5px 0px;
+}
+
+.btn-dark {
+  color: white !important;
+}
+
+.form-group label,
+p {
+  color: white;
+}

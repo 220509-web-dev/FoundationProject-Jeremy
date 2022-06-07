@@ -15,17 +15,16 @@ public class UserDaoPostgres implements UserDAO {
 
     @Override
     public User createUser(User user) {
-        try(Connection connection = ConnectionUtil.getConnection()) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to create user.";
             CustomLogger.log(logString, LogLevel.INFO);
-            String sql = "insert into forum_app.app_users (first_name, last_name, email, username, password, profile_pic) values(?,?,?,?,?,?)";
+            String sql = "insert into forum_app.app_users (first_name, last_name, username, password, profile_pic) values(?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getUsername());
-            ps.setString(5, user.getPassword());
-            ps.setString(6, user.getProfilePic());
+            ps.setString(3, user.getUsername());
+            ps.setString(4, user.getPassword());
+            ps.setString(5, user.getProfilePic());
 
             ps.execute();
 
@@ -51,23 +50,21 @@ public class UserDaoPostgres implements UserDAO {
 
     @Override
     public User getUserById(int id) {
-        try (Connection connection = ConnectionUtil.getConnection()){
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to retrieve post by User.";
             CustomLogger.log(logString, LogLevel.INFO);
             String sql = "select * from forum_app.app_users where id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             //Get First Record
             rs.next();
 
-            //Create a book and set the values of that book to the information in the result set
             User user = new User();
             user.setId(id);
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
-            user.setEmail(rs.getString("email"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             user.setProfilePic(rs.getString("profile_pic"));
@@ -77,9 +74,9 @@ public class UserDaoPostgres implements UserDAO {
             CustomLogger.parser();
             return user;
 
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             logString = String.format("User was not found... More Information: User ID: %d not found.", id);
-            CustomLogger.log(logString,LogLevel.ERROR);
+            CustomLogger.log(logString, LogLevel.ERROR);
             CustomLogger.parser();
             System.err.println("Exception: User ID: " + id + " not found.");
         }
@@ -88,23 +85,21 @@ public class UserDaoPostgres implements UserDAO {
 
     @Override
     public User getUserByUser(String username) {
-        try (Connection connection = ConnectionUtil.getConnection()){
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to retrieve User by Username.";
             CustomLogger.log(logString, LogLevel.INFO);
             String sql = "select * from forum_app.app_users where username = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1,username);
+            ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
 
             //Get First Record
             rs.next();
 
-            //Create a book and set the values of that book to the information in the result set
             User user = new User();
             user.setId(rs.getInt("id"));
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
-            user.setEmail(rs.getString("email"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             user.setProfilePic(rs.getString("profile_pic"));
@@ -114,9 +109,9 @@ public class UserDaoPostgres implements UserDAO {
             CustomLogger.parser();
             return user;
 
-        } catch (SQLException exception){
+        } catch (SQLException exception) {
             logString = String.format("User was not found... More Information: Username: %d not found.", username);
-            CustomLogger.log(logString,LogLevel.ERROR);
+            CustomLogger.log(logString, LogLevel.ERROR);
             CustomLogger.parser();
             System.err.println("Exception: Username: " + username + " not found.");
         }
@@ -125,7 +120,7 @@ public class UserDaoPostgres implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        try(Connection connection = ConnectionUtil.getConnection()){
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to retrieve all Users.";
             CustomLogger.log(logString, LogLevel.INFO);
             String sql = "select * from forum_app.app_users";
@@ -134,12 +129,11 @@ public class UserDaoPostgres implements UserDAO {
 
             List<User> users = new ArrayList<User>();
 
-            while (rs.next()){
+            while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setFirstName(rs.getString("first_name"));
                 user.setLastName(rs.getString("last_name"));
-                user.setEmail(rs.getString("email"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setProfilePic(rs.getString("profile_pic"));
@@ -161,19 +155,18 @@ public class UserDaoPostgres implements UserDAO {
 
     @Override
     public User updateUser(User user) {
-        try(Connection connection = ConnectionUtil.getConnection()) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to update a User.";
             CustomLogger.log(logString, LogLevel.INFO);
-            String sql = "update forum_app.app_users set first_name = ?, last_name = ?, email = ? , username = ?, password = ?, profile_pic = ?, role_id = ? where id = ?";
+            String sql = "update forum_app.app_users set first_name = ?, last_name = ? , username = ?, password = ?, profile_pic = ?, role_id = ? where id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getUsername());
-            ps.setString(5, user.getPassword());
-            ps.setString(6, user.getProfilePic());
-            ps.setInt(7, user.getRoleId());
-            ps.setInt(8, user.getId());
+            ps.setString(3, user.getUsername());
+            ps.setString(4, user.getPassword());
+            ps.setString(5, user.getProfilePic());
+            ps.setInt(6, user.getRoleId());
+            ps.setInt(7, user.getId());
 
             ps.execute();
 
@@ -193,7 +186,7 @@ public class UserDaoPostgres implements UserDAO {
 
     @Override
     public void deleteUserById(int id) {
-        try(Connection connection = ConnectionUtil.getConnection()) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             logString = "Attempting to delete a User.";
             CustomLogger.log(logString, LogLevel.INFO);
             String sql = "delete from forum_app.app_users where id = ?";

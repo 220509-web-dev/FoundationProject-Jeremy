@@ -22,8 +22,10 @@ public class ContextLoaderListener implements ServletContextListener {
         System.out.println("[LOG] - The servlet context was initialized at " + LocalDateTime.now());
 
         ObjectMapper mapper = new ObjectMapper();
+
         PostDAO postDAO = new PostDaoPostgres();
         UserDAO userDAO = new UserDaoPostgres();
+
 
         UserServlet userServlet = new UserServlet(mapper, userDAO);
         PostServlet postServlet = new PostServlet(mapper, postDAO);

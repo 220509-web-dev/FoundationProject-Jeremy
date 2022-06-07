@@ -11,7 +11,6 @@ CREATE TABLE app_users (
   id int generated always as identity primary key,
   first_name varchar NOT NULL,
   last_name varchar NOT NULL,
-  email varchar unique NOT NULL,
   username varchar unique NOT NULL check(length(username) >= 4),
   password varchar NOT NULL check(length(password) >= 7),
   profile_pic varchar,
