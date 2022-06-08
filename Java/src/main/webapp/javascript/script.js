@@ -39,15 +39,34 @@ fetch("/forumApp/posts")
   .then((postData) => {
     console.log(postData);
     let post = "";
+    let current = 0;
     postData.map((values) => {
-      post += `<div id="post-list" class="post-list"><a href="${values.videoUrl}" target="_blank"  onclick="toggle();">
-      <img
+      current++;
+      post += `<div id="post-list" class="post-list">
+      <div id="test">
+        <img
         src="${values.thumbnailUrl}"
-        alt=""
-        class="thumbnail" 
-        onerror="this.src='https://c.tenor.com/qOwAMZ6sAVEAAAAd/on-my-own-empty-fridge.gif';";
-    /></a>
-    <div class="flex-div">
+          alt=""
+          class="thumbnail"
+          id="video+${current}"
+          ;
+        />
+        <div class="video">
+          <video controls autoplay poster="https://res.cloudinary.com/drrkccbb4/image/upload/v1654707972/ForumApp/Minimal_Aesthetic_Hello_February_Facebook_Cover_mlkuj9.png">
+            <source
+            src="${values.videoUrl}"
+              type="video/mp4"
+              onerror="this.src='https://www.seekpng.com/png/detail/138-1387631_login-comments-windows-10-person-icon.png';"/>
+            />
+          </video>
+          <div id="close_video+${current}" onclick="this.parentElement.classList.toggle('active'); this.previousElementSibling.pause()">X</div>
+        </div>
+        <div id="post_overview">
+        <h2>Description</h2>
+        ${values.description}
+        </div>
+      </div>
+      <div class="flex-div">
       <img id="userimg" src="${values.profilepic}" alt="" 
       onerror="this.src='https://www.seekpng.com/png/detail/138-1387631_login-comments-windows-10-person-icon.png';"/>
       <div class="vid-info">
@@ -55,8 +74,7 @@ fetch("/forumApp/posts")
         <p>${values.owner}</p>
         <p>Category: ${values.category}</p>
       </div>
-
-    </div>
+      </div>
     </div>`;
     });
     document.getElementById("posts").innerHTML = post;
@@ -75,11 +93,13 @@ img.addEventListener("error", function handleError() {
   img.alt = "default";
 });
 
-function toggle() {
-  var video = document.querySelector(".movie_video");
+function theFunction(e) {
+  let video = document.getElementById(e.target.id).nextElementSibling;
+  console.log(video);
   video.classList.toggle("active");
-  var video = document.querySelector("video");
-  video.classList.toggle("active");
-  video.pause();
-  video.currentTime = 0;
+  video.firstElementChild.play();
+
+  let close = document.getElementById(e.target.id).parentElement;
+  console.log("close ", close);
+  close.classList.toggle("active");
 }

@@ -22,6 +22,4 @@ function upload() {
       videoUrl,
     }),
   });
-
-  alert("You have successfully uploaded!");
 }
