@@ -1,5 +1,9 @@
 package com.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.time.LocalDateTime;
 
 public class ErrorResponse {
@@ -45,6 +49,14 @@ public class ErrorResponse {
                 ", message='" + message + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 '}';
+    }
+
+    public String generateErrors(ObjectMapper mapper) throws JsonProcessingException {
+        ObjectNode nodes = mapper.createObjectNode();
+        nodes.put("code", this.getStatusCode());
+        nodes.put("message", this.getMessage());
+        nodes.put("timestamp", this.getTimestamp());
+        return mapper.writeValueAsString(nodes);
     }
 
 }

@@ -3,14 +3,35 @@ window.onload = function () {
 };
 
 function login() {
-  console.log("login");
   let username = document.getElementById("username").value;
   let password = document.getElementById("password").value;
+  let error = document.getElementById("error");
 
-  fetch("/forumApp/auth", {
+  fetch("/forumApp/auth/login", {
     method: "POST",
     body: JSON.stringify({ username, password }),
-  });
-
-  alert("You have successfully logged in!");
+  })
+    .then((response) =>
+      response.json().then((data) => {
+        console.log(data);
+        if (response.ok) {
+          let user = data;
+          let header = document.getElementById("success");
+          error.hidden = true;
+          header.hidden = false;
+          header.innerHTML = "Welcome " + user.username;
+          header.innerHTML += "<img src='" + user.profilePic + "'>";
+          window.setTimeout(function () {
+            window.location.href = "index.html";
+          }, 3000);
+        } else {
+          error.hidden = false;
+          error.innerHTML = "invalid username + password";
+        }
+      })
+    )
+    .catch(() => {
+      error.hidden = false;
+      error.innerHTML = "Issue attempting to log in";
+    });
 }

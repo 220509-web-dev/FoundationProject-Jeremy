@@ -1,8 +1,10 @@
 package com.servlets;
 
 import com.dao.UserDAO;
+import com.dto.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.entities.User;
+import com.services.UserService;
 import com.utils.CustomLogger;
 import com.utils.LogLevel;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -19,12 +21,13 @@ import java.util.stream.Collectors;
 public class UserServlet extends HttpServlet {
 
     private final ObjectMapper mapper;
-    private final UserDAO userDAO;
+    private final UserService userService;
     private String logString;
+    private ErrorResponse error;
 
-    public UserServlet(ObjectMapper mapper, UserDAO userdao) {
+    public UserServlet(ObjectMapper mapper, UserService userService) {
         this.mapper = mapper;
-        this.userDAO = userdao;
+        this.userService = userService;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class UserServlet extends HttpServlet {
 
         logString = "UserServlet received a get request at - " + LocalDateTime.now();
         CustomLogger.log(logString, LogLevel.INFO);
-        List<User> userList = userDAO.getAllUsers();
+        List<User> userList = userService.getAllUsers();
         System.out.println("This is the request " + req);
 
         //Get user by Username
@@ -70,16 +73,20 @@ public class UserServlet extends HttpServlet {
         CustomLogger.log(logString, LogLevel.INFO);
 
         try {
-            List<User> users = userDAO.getAllUsers();
+            List<User> users = userService.getAllUsers();
             User newUser = mapper.readValue(req.getInputStream(), User.class);
             for (User user : users) {
                 if (newUser.getUsername().equals(user.getUsername())) {
                     logString = "Username taken, please insert a different username - " + LocalDateTime.now();
                     CustomLogger.log(logString, LogLevel.ERROR);
+                    error = new ErrorResponse(409, "This username is already in use.");
+                    resp.setContentType("application/json");
+                    resp.setStatus(409);
+                    resp.getWriter().write(error.generateErrors(mapper));
 
                     System.err.println("[ERROR] - Username taken, please insert a different username.");
                 } else {
-                    userDAO.createUser(newUser);
+                    userService.createUser(newUser);
                 }
             }
 

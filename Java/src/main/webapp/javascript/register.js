@@ -20,6 +20,4 @@ function register() {
       profilePic,
     }),
   });
-
-  alert("You have successfully registered!");
 }

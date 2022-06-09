@@ -32,7 +32,7 @@ public class UserService {
         return this.userDAO.getAllUsers();
     }
 
-    public User createNewUser(User newUser) {
+    public User createUser(User newUser) {
         return this.userDAO.createUser(newUser);
     }
 

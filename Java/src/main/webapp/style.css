@@ -121,7 +121,12 @@ span {
   transform: translateY(100%);
   transition: transform 0.3s ease-in-out;
   overflow: auto;
-  max-height: 100%;
+  max-height: 50%;
+}
+
+#post_overview p {
+  color: black;
+  white-space: pre-wrap;
 }
 
 .post-list:hover #post_overview {
@@ -139,30 +144,109 @@ span {
 }
 
 .video div {
-  position: fixed;
   top: 0;
-  right: 20px;
   z-index: 8;
-  cursor: pointer;
   font-size: 40px;
   font-weight: bold;
-  -webkit-text-fill-color: white;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
 }
 
 video {
   min-height: 100%;
-  min-width: 100%;
   position: relative;
+  object-fit: cover;
 }
 
 .active {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.deactive {
-  display: none !important;
+.blur {
+  z-index: 6;
+  position: absolute;
+  width: 100%;
+  right: 0;
+  height: 100%;
+  filter: blur(8px);
+  background: rgb(0, 0, 0);
+  opacity: 0.5;
+}
+
+.video-info {
+  height: 600px;
+  background: #1f1f1f;
+  width: 30%;
+  margin-left: -30px;
+  position: relative;
+  font-size: 15px !important;
+  padding: 10px;
+  overflow-y: auto;
+  padding-right: 40px !important;
+}
+
+.video-info p {
+  white-space: pre-line;
+  color: #c6c6c6;
+}
+
+.title {
+  position: relative;
+  width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 30px !important;
+  font-weight: bold;
+  color: white;
+}
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close {
+  position: absolute;
+  width: 25px;
+  top: 5px;
+  right: 5px;
+  font-size: 30px;
+  color: red;
+  cursor: pointer;
+}
+
+.description {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.info {
+  font-size: 12px;
+  margin-bottom: 10px;
+  align-items: center !important;
+}
+
+.info img {
+  width: 25px;
+  height: 25px;
+}
+
+.info p {
+  margin-bottom: 0;
+  color: white;
+  font-size: 12px;
+}
+
+.category {
+  font-size: 10px;
+  color: red;
+}
+
+.category2 {
+  font-size: 10px;
+  color: white;
 }
 
 /* USER */
@@ -246,4 +330,37 @@ h4 {
 .form-group label,
 p {
   color: white;
+}
+
+/* Login */
+
+#error {
+  color: red;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#success {
+  color: black;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#success img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid black;
 }

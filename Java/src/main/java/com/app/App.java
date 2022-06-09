@@ -11,21 +11,29 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-//        UserDAO userDAO = new UserDaoPostgres();
+        UserDAO userDAO = new UserDaoPostgres();
 //        User user = new User(0, "Rimiru", "Tempest", "Rimiruslime@gmail.com", "DemonLord", "Veldora", "https://res.cloudinary.com/drrkccbb4/image/upload/v1652896153/ForumApp/download_livdk3.jpg", 3);
 //        userDAO.createUser(user);
-//        User userb = userDAO.getUserByUser("Sosathegod");
-//        System.out.println(a);
+        User userb = userDAO.getUserByUser("Sosathegod");
+        System.out.println(userb);
 //        a.setRoleId(3);
 //        userDAO.updateUser(a);
 //
 //        userDAO.deleteUserById(9);
 
-//        PostDAO postDAO = new PostDaoPostgres();
+        PostDAO postDAO = new PostDaoPostgres();
 //        Post post = new Post(0,"RIMIRU IS WAY TOO OP!", "How can anyone even defend this man?", "https://res.cloudinary.com/drrkccbb4/image/upload/v1653597817/ForumApp/E5HrjcWUYAEjgDk_tt0i7x.jpg","https://res.cloudinary.com/drrkccbb4/video/upload/v1653598196/ForumApp/videoplayback_2_bk6n8g.mp4", 9, 10);
 //        postDAO.createPost(post);
 //        Post b = postDAO.getPostById(202);
 //        System.out.println(b);
+        List<Post> postList = postDAO.getAllPost();
+//        System.out.println(postList);
+        Post post = postDAO.getPostById(21);
+        System.out.println(post);
+        post.setCategoryId(10);
+        postDAO.updatePost(post);
+        System.out.println(post);
+
 
 //        List<Post> postList = postDAO.getAllPost();
 //        System.out.println(postList);
@@ -34,7 +42,6 @@ public class App {
 //        postDAO.updatePost(b);
 
 //        postDAO.deletePostById(1);
-
 
 
     }

@@ -12,12 +12,13 @@ public class AuthService {
         this.userService = userService;
     }
 
-    public void register(User userToBeRegistered) {
+    public User register(User userToBeRegistered) {
         if (userService.getUserByUsername(userToBeRegistered.getUsername()) != null) {
             throw new UsernameNotAvailableException("Username is already taken");
         }
 
-        userService.createNewUser(userToBeRegistered);
+        User user = userService.createUser(userToBeRegistered);
+        return user;
     }
 
     public User login(String username, String password) {
