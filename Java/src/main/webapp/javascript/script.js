@@ -62,12 +62,12 @@ fetch("/forumApp/posts")
             />
           </video>
           <div class="video-info">
-          <img src="https://res.cloudinary.com/drrkccbb4/image/upload/v1654804588/ForumApp/xxxbutton_gygxyy.png" id="close_video+${current}" class="close" onclick="this.parentElement.parentElement.parentElement.classList.toggle('active'); this.parentElement.previousElementSibling.pause()">X</img>
+          <img src="https://res.cloudinary.com/drrkccbb4/image/upload/v1654804588/ForumApp/xxxbutton_gygxyy.png" id="close_video+${current}" class="close" onclick="this.parentElement.parentElement.parentElement.classList.toggle('active'); this.parentElement.previousElementSibling.pause()"></img>
             <h2 class="title">Title: 
             ${values.title}</h2>
             <p class="category2" ><span class="category">Category:</span> ${values.category}</p>
             <div class="flex-div info">
-            <img src="${values.profilePic}" alt="" class="profile-pic" onerror="this.src='https://www.seekpng.com/png/detail/138-1387631_login-comments-windows-10-person-icon.png';";/>
+            <img src="${values.profilepic}" alt="" class="profile-pic" onerror="this.src='https://www.seekpng.com/png/detail/138-1387631_login-comments-windows-10-person-icon.png';";/>
             <p>${values.owner}</p> </div>
             <p><span class="description">DESCRIPTION:</span>
             ${values.description}</p>
@@ -94,16 +94,6 @@ fetch("/forumApp/posts")
   .catch((err) => {
     console.log(err);
   });
-
-const userimg = document.getElementById("userimg");
-
-img.addEventListener("error", function handleError() {
-  const defaultImage =
-    "https://bobbyhadz.com/images/blog/javascript-show-div-on-select-option/banner.webp";
-
-  img.src = defaultImage;
-  img.alt = "default";
-});
 
 function theFunction(e) {
   let video = document.getElementById(e.target.id).nextElementSibling;

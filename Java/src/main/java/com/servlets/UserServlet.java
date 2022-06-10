@@ -92,8 +92,8 @@ public class UserServlet extends HttpServlet {
 
 
         } catch (Exception e) {
-            logString = String.format("An error occurred while creating a User. More Information: %s", ExceptionUtils.getStackTrace(e));
-            CustomLogger.log(logString, LogLevel.INFO);
+//            logString = String.format("An error occurred while creating a User from the User Servlet. More Information: %s", ExceptionUtils.getStackTrace(e));
+//            CustomLogger.log(logString, LogLevel.ERROR);
             e.printStackTrace();
         }
         resp.setStatus(204);

@@ -4,6 +4,7 @@ import com.entities.User;
 import com.utils.ConnectionUtil;
 import com.utils.CustomLogger;
 import com.utils.LogLevel;
+import com.utils.exceptions.UsernameNotAvailableException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.sql.*;
@@ -34,18 +35,19 @@ public class UserDaoPostgres implements UserDAO {
             int generatedID = rs.getInt("id");
 
             user.setId(generatedID);// the book id changing for 0 to a non-zero values means that it is saved
+            System.out.println("User created successfully: " + user);
             logString = "Created user successfully!";
             CustomLogger.log(logString, LogLevel.INFO);
             CustomLogger.parser();
             return user;
 
         } catch (SQLException exception) {
-            logString = String.format("An error occurred while creating a User. More Information: %s", ExceptionUtils.getStackTrace(exception));
+            logString = String.format("An error occurred while creating a User. More Information: %s", ExceptionUtils.getMessage(new UsernameNotAvailableException("Username already taken, please try again.")));
             CustomLogger.log(logString, LogLevel.ERROR);
-            CustomLogger.parser();
-            exception.printStackTrace();
+
+//            exception.printStackTrace();
+            throw new UsernameNotAvailableException("Username already taken, please try again.");
         }
-        return null;
     }
 
     @Override

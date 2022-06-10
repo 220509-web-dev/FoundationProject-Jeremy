@@ -54,9 +54,20 @@ public class AuthServlet extends HttpServlet {
         if (path.equals("/auth/login")) {
             User getUser = authService.login(reqUser.getUsername(), reqUser.getPassword());
             // set response
-            resp.setContentType("application/json");
+
             if (getUser != null) {
+                HttpSession session = req.getSession();
+                session.setAttribute("auth-user", authService.login(reqUser.getUsername(), reqUser.getPassword()));
                 result = mapper.writeValueAsString(getUser);
+                resp.setContentType("application/json");
+ 
+//                System.out.println(result);
+//                System.out.println("[LOG] - found user!");
+//                logString = "Found user, Cookie Generated! - " + LocalDateTime.now();
+//                CustomLogger.log(logString, LogLevel.INFO);
+//                CustomLogger.parser();
+
+                resp.setStatus(204);
             } else {
                 ResponseObject ro = new ResponseObject("message:invalid username + password");
                 result = mapper.writeValueAsString(ro);
